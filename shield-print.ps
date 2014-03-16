@@ -25,6 +25,9 @@
 /bnc-flap-w 13 mm def
 /bnc-protrude b-thick def  % The additional little metal plate thingie.
 
+/thin-line 0.3 def  % thin line in points
+/thick-line 1 def
+
 % Rectangle with origin at x/y with given width/height
 % <x> <y> <width> <height>
 /rect {
@@ -48,7 +51,7 @@
 
     2 copy
     exch bnc-flap-w 2 div sub exch   % move relative half left of flap
-    1 setlinewidth       % cut and folding lines
+    thick-line setlinewidth       % cut and folding lines
     bnc-flap-w 5 index bnc-flap-h add rect     % basic flap
 
     % Stack: <offset> <x> <y>
@@ -56,7 +59,7 @@
     2 copy
     bnc-dia screw-hole
     % Stack: screw center
-    0 setlinewidth
+    thin-line setlinewidth
     exch bnc-dia 2 div sub exch  % x/y
     bnc-dia bnc-flap-h rect
     grestore
@@ -73,7 +76,7 @@
 % <x> <y> <diameter>
 /screw-hole {
     gsave
-    0 setlinewidth
+    thin-line setlinewidth
     3 1 roll
     2 copy cross
     3 -1 roll
@@ -85,7 +88,7 @@
 
 
 /Helvetica findfont 9 scalefont setfont
-0 setlinewidth
+thin-line setlinewidth
 
 20 mm 250 mm moveto (RedPitaya case metal cutouts. Print out, glue on tinned sheet; punch centers + drill; then cut; fold; Nice to have: solder edges.) show
 
@@ -106,7 +109,7 @@
 84 mm  27 mm 3 mm screw-hole
 
 % square part of the RP
-1 setlinewidth
+thick-line setlinewidth
  0 mm -30 mm fold-mark sub moveto
 87 mm -30 mm fold-mark sub lineto
 87 mm  30 mm fold-mark add lineto
@@ -122,8 +125,8 @@ stroke
 /flap-bore-distance flap-distance 6 mm add fold-mark 2 mul add def
 
 % Right/Left flaps folding around the whole board and connectors
--8 mm -30 mm fold-mark sub 84 mm flap-distance fold-mark add neg rect
--8 mm  30 mm fold-mark add 84 mm flap-distance fold-mark add     rect
+-8 mm -30 mm fold-mark sub 87 mm 8 mm add flap-distance fold-mark add neg rect
+-8 mm  30 mm fold-mark add 87 mm 8 mm add flap-distance fold-mark add     rect
 
 % Ground-plane flaps folding up to screw on top-standoff
 % top
