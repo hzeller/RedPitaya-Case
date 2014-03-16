@@ -1,0 +1,236 @@
+%!PS-Adobe-3.0
+% (cc-BY-SA) h.zeller@acm.org
+% PostScript: the simplest way to do 2D CAD :)
+%
+% Guidance printout for a RedPitaya http://redpitaya.com/ shield.
+% Print on paper, glue on a thin tin-plate, and cut with scissors.
+
+% All our measurements are in mm, so let's have a function that translates
+/mm { 25.4 div 72 mul } def
+
+/PI 3.14159265 def
+
+/b-stand 5 mm def    % bottom standoff size
+/t-stand 6 mm def    % top standoff size
+/b-thick 1.65 mm def  % board thickness
+
+/left-heatsink-hole 87 mm 78.8 mm sub def  % from the dimensions diagram
+
+/bend-r 0.8 mm def
+/fold-mark PI bend-r mul 4 div def  % Given the bending radius, we want
+                        % the mark to be at the half-way point, 1/8 circle.
+
+/bnc-dia 6 mm def    % diameter of bnc-hole (actual size around 5.4mm)
+/bnc-flap-h 8 mm def
+/bnc-flap-w 13 mm def
+/bnc-protrude b-thick def  % The additional little metal plate thingie.
+
+% Rectangle with origin at x/y with given width/height
+% <x> <y> <width> <height>
+/rect {
+    newpath
+    4 2 roll
+    moveto
+    1 index 0 rlineto
+    dup 0 exch rlineto
+    1 index neg 0 rlineto
+    closepath
+    stroke
+    pop pop
+} def
+
+% Flap around a BNC connector. For convenience of placement, the origin
+% is in the center, at the bottom of the square flap.
+% <y-offset>
+/connector-flap {
+    gsave
+    currentpoint
+
+    2 copy
+    exch bnc-flap-w 2 div sub exch   % move relative half left of flap
+    1 setlinewidth       % cut and folding lines
+    bnc-flap-w 5 index bnc-flap-h add rect     % basic flap
+
+    % Stack: <offset> <x> <y>
+    3 -1 roll add
+    2 copy
+    bnc-dia screw-hole
+    % Stack: screw center
+    0 setlinewidth
+    exch bnc-dia 2 div sub exch  % x/y
+    bnc-dia bnc-flap-h rect
+    grestore
+} def
+
+% <x> <y>
+/cross {
+  2 copy
+  moveto -1.2 mm 0 rmoveto 2.4 mm 0 rlineto
+  moveto 0 -1.2 mm rmoveto 0 2.4 mm rlineto
+  stroke
+} def
+
+% <x> <y> <diameter>
+/screw-hole {
+    gsave
+    0 setlinewidth
+    3 1 roll
+    2 copy cross
+    3 -1 roll
+    2 div 0 360 arc
+    stroke
+    grestore
+} def
+
+
+
+/Helvetica findfont 9 scalefont setfont
+0 setlinewidth
+
+50 mm 250 mm moveto (RedPitaya case metal cutouts. Print out, glue on tinned sheet; punch centers + drill; then cut) show
+
+% Origin of our print, somewhere in the middle of the page
+50 mm 100 mm translate
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Bottom Part. Paper on the 'inside' of the case
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+10 mm 45 mm moveto ([inside case; all folds inwards]) show
+0 mm 0 mm moveto (GitHub hzeller/RedPitaya-Case | Open Source Hardware) show
+
+% Bore holes of RP
+ 0 mm  27 mm 3 mm screw-hole  0 mm  27 mm 6 mm screw-hole
+ 0 mm -27 mm 3 mm screw-hole  0 mm -27 mm 6 mm screw-hole
+84 mm -27 mm 3 mm screw-hole
+84 mm  27 mm 3 mm screw-hole
+
+% square part of the RP
+1 setlinewidth
+ 0 mm -30 mm fold-mark sub moveto
+87 mm -30 mm fold-mark sub lineto
+87 mm  30 mm fold-mark add lineto
+ 0 mm  30 mm fold-mark add lineto
+stroke
+
+% Right/Left flaps folding around connectors
+3 mm -30 mm fold-mark sub 84 mm b-stand 7 mm add neg rect
+3 mm  30 mm fold-mark add 84 mm b-stand 7 mm add rect
+
+% connecting line between flaps and outer stuff
+-6 mm 26 mm moveto -3 mm 31 mm lineto stroke
+-6 mm -26 mm moveto -3 mm -31 mm lineto stroke
+
+% Right/Left ground flaps. We loose about 2x fold-mark material while bending.
+/flap-distance b-stand t-stand add b-thick add def
+/flap-bore-distance flap-distance 6 mm add fold-mark 2 mul add def
+
+% Ground-plane flaps folding up to screw on top-standoff
+% top
+-3 mm -30 mm fold-mark sub 5.5 mm flap-distance 7 mm add neg rect
+-3 mm -30 mm fold-mark sub 5.5 mm flap-distance fold-mark add neg rect
+0 mm -27 mm flap-bore-distance sub 3 mm screw-hole
+
+% bottom
+-3 mm 30 mm fold-mark add 5.5 mm flap-distance 7 mm add rect
+-3 mm 30 mm fold-mark add 5.5 mm flap-distance fold-mark add rect
+0 mm 27 mm flap-bore-distance add 3 mm screw-hole
+
+% BNC flaps.
+
+% The connector centers are b-stand distance from the bottom
+% plus the board thickness, hence all are b-stand b-thick add offset.
+
+% Outer BNC flaps.
+-3 mm 30 mm moveto   % top
+gsave
+   75 rotate
+   bnc-flap-w 2 div 4.2 mm add neg bnc-protrude 0.5 mm sub fold-mark add rmoveto b-stand b-thick add connector-flap
+grestore
+
+-3 mm -30 mm moveto  % bottom
+gsave
+   90 15 add rotate
+   bnc-flap-w 2 div 4.2 mm add    bnc-protrude 0.5 mm sub fold-mark add rmoveto b-stand b-thick add connector-flap
+grestore
+
+% center BNC flaps
+-8 mm 0 mm moveto    % top
+gsave
+   85 rotate
+   bnc-flap-w 2 div     bnc-protrude fold-mark add rmoveto b-stand b-thick add connector-flap
+grestore
+
+-8 mm 0 mm moveto    % bottom
+gsave
+   90 5 add rotate
+   bnc-flap-w 2 div neg   bnc-protrude fold-mark add rmoveto b-stand b-thick add connector-flap
+grestore
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Top Part; Paper on the 'outside' of the case
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% comment out the following line to see it aligned on top of the bottom part
+0 100 mm translate
+0 0 1 setrgbcolor   % comment out if you'd like the lines black.
+
+20 mm 8 mm moveto ([outside case; BNC flaps fold outwards]) show
+
+0 mm  27 mm 3 mm screw-hole
+0 mm -27 mm 3 mm screw-hole
+
+% outline
+-7 mm 26.5 mm moveto
+-3 mm 30 mm lineto
+2.5 mm 30 mm lineto
+2.5 mm 20.5 mm lineto
+29.5 mm 20.5 mm lineto
+
+9 mm 0 mm lineto
+
+29.5 mm -20.5 mm lineto
+2.5 mm -20.5 mm lineto
+2.5 mm -30 mm lineto
+-3 mm -30 mm lineto
+-7 mm -26.5 mm lineto
+stroke
+
+% The case is lower than the heatsink hole. So we need to punch out that area
+left-heatsink-hole 0 8 mm screw-hole
+
+% BNC flaps.
+
+% The connector centers are t-stand distance from the top
+% minus the board thickness (the connectors are mounted on top of the board),
+% hence all are t-stand b-thick sub offset.
+% Also, these flaps will go on top of the flaps coming from the bottom, so we
+% add bend-r
+
+% Outer BNC flaps.
+-3 mm 30 mm moveto   % top
+gsave
+   75 rotate
+   bnc-flap-w 2 div 4.2 mm add neg bnc-protrude 0.5 mm sub fold-mark add bend-r add rmoveto t-stand b-thick sub connector-flap
+grestore
+
+-3 mm -30 mm moveto  % bottom
+gsave
+   90 15 add rotate
+   bnc-flap-w 2 div 4.2 mm add    bnc-protrude 0.5 mm sub fold-mark add bend-r add rmoveto t-stand b-thick sub connector-flap
+grestore
+
+% center BNC flaps
+-8 mm 0 mm moveto    % top
+gsave
+   85 rotate
+   bnc-flap-w 2 div     bnc-protrude fold-mark add bend-r add rmoveto t-stand b-thick sub connector-flap
+grestore
+
+-8 mm 0 mm moveto    % bottom
+gsave
+   90 5 add rotate
+   bnc-flap-w 2 div neg   bnc-protrude fold-mark add bend-r add rmoveto t-stand b-thick sub connector-flap
+grestore
+
+showpage
