@@ -2,8 +2,8 @@
 % (cc-BY-SA) h.zeller@acm.org
 % PostScript: the simplest way to do 2D CAD :)
 %
-% Guidance printout for a RedPitaya http://redpitaya.com/ shield.
-% Print on paper, glue on a thin tin-plate, drill, then cut with scissors.
+% Template printout for a RedPitaya http://redpitaya.com/ shield.
+% Print on paper, glue on a thin tinned metal sheet, drill, then cut.
 
 % Zero X is on the left screw pair centers.
 % Zero Y is center of the board.
@@ -13,6 +13,12 @@
 
 % All our measurements are in mm, so let's have a function that translates
 /mm { 25.4 div 72 mul } def
+
+% If your printer does not scale properly, you notice that the reference length
+% is not as expected.
+% Measure the reference length of the 100mm line in the unscaled output and
+% enter the number here, so that it can be compensated.
+/measured-reference-length 100.0 mm def
 
 /PI 3.14159265 def
 
@@ -111,14 +117,20 @@
     0 -2 mm rlineto
 } def
 
+
+100 mm measured-reference-length div
+100 mm measured-reference-length div
+scale
+
 /Helvetica findfont 9 scalefont setfont
 thin-line setlinewidth
 
-20 mm 250 mm moveto (RedPitaya case metal cutouts. Print out, glue on tinned sheet; punch centers + drill; then cut; fold; Nice to have: solder edges.) show
+20 mm 255 mm moveto (RedPitaya case metal cutouts.) show
+20 mm 251 mm moveto (Print out, glue on tinned metal sheet; punch centers + drill; then cut; fold; Nice to have: solder edges.) show
 
 % Scaling test
 thin-line setlinewidth
-40 mm 242 mm moveto (Make sure your printer prints 1:1 with these reference lines) show
+30 mm 243 mm moveto (Make sure your printer scales 1:1 by confirming the length of these reference lines) show
 40 mm 240 mm moveto   100 mm measure-line   5 mm 0 rmoveto (100mm) show
 40 mm 235 mm moveto   101.6 mm measure-line 5 mm 0 rmoveto (4 inches) show
 stroke
@@ -130,7 +142,7 @@ stroke
 %%% Bottom Part. Paper on the 'inside' of the case
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-10 mm 45 mm moveto ([inside case; all folds inwards]) show
+10 mm 47 mm moveto ([ BOTTOM case; all folds inwards, towards paper ]) show
 5 mm 0 mm moveto (GitHub hzeller/RedPitaya-Case | Open Source Hardware) show
 
 mark-origin
@@ -215,7 +227,7 @@ grestore
 
 mark-origin
 
--30 mm -35 mm moveto ([outside case; BNC flaps fold outwards]) show
+-30 mm -35 mm moveto ([ TOP case; BNC flaps fold outwards ]) show
 30 mm 20 mm moveto (<- Pretty sharp - round over a bit while cutting) show
 
 0 mm  27 mm 3 mm screw-hole
