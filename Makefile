@@ -1,4 +1,4 @@
-all: rpcase.stl shield-print.dxf
+all: plastic-case.stl shield-metal-cut.dxf
 
 %.stl: %.scad
 	openscad -o $@ -d $@.deps $<
