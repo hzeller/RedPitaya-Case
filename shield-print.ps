@@ -87,7 +87,7 @@
 /Helvetica findfont 9 scalefont setfont
 0 setlinewidth
 
-50 mm 250 mm moveto (RedPitaya case metal cutouts. Print out, glue on tinned sheet; punch centers + drill; then cut) show
+20 mm 250 mm moveto (RedPitaya case metal cutouts. Print out, glue on tinned sheet; punch centers + drill; then cut; fold; Nice to have: solder edges.) show
 
 % Origin of our print, somewhere in the middle of the page
 50 mm 100 mm translate
@@ -100,8 +100,8 @@
 0 mm 0 mm moveto (GitHub hzeller/RedPitaya-Case | Open Source Hardware) show
 
 % Bore holes of RP
- 0 mm  27 mm 3 mm screw-hole  0 mm  27 mm 6 mm screw-hole
- 0 mm -27 mm 3 mm screw-hole  0 mm -27 mm 6 mm screw-hole
+ 0 mm  27 mm 3 mm screw-hole
+ 0 mm -27 mm 3 mm screw-hole
 84 mm -27 mm 3 mm screw-hole
 84 mm  27 mm 3 mm screw-hole
 
@@ -113,10 +113,6 @@
  0 mm  30 mm fold-mark add lineto
 stroke
 
-% Right/Left flaps folding around connectors
-3 mm -30 mm fold-mark sub 84 mm b-stand 7 mm add neg rect
-3 mm  30 mm fold-mark add 84 mm b-stand 7 mm add rect
-
 % connecting line between flaps and outer stuff
 -6 mm 26 mm moveto -3 mm 31 mm lineto stroke
 -6 mm -26 mm moveto -3 mm -31 mm lineto stroke
@@ -125,15 +121,17 @@ stroke
 /flap-distance b-stand t-stand add b-thick add def
 /flap-bore-distance flap-distance 6 mm add fold-mark 2 mul add def
 
+% Right/Left flaps folding around the whole board and connectors
+-8 mm -30 mm fold-mark sub 84 mm flap-distance fold-mark add neg rect
+-8 mm  30 mm fold-mark add 84 mm flap-distance fold-mark add     rect
+
 % Ground-plane flaps folding up to screw on top-standoff
 % top
--3 mm -30 mm fold-mark sub 5.5 mm flap-distance 7 mm add neg rect
--3 mm -30 mm fold-mark sub 5.5 mm flap-distance fold-mark add neg rect
+-3 mm -30 mm fold-mark sub   5.5 mm   flap-distance 7 mm add neg rect
 0 mm -27 mm flap-bore-distance sub 3 mm screw-hole
 
 % bottom
 -3 mm 30 mm fold-mark add 5.5 mm flap-distance 7 mm add rect
--3 mm 30 mm fold-mark add 5.5 mm flap-distance fold-mark add rect
 0 mm 27 mm flap-bore-distance add 3 mm screw-hole
 
 % BNC flaps.
@@ -145,26 +143,30 @@ stroke
 -3 mm 30 mm moveto   % top
 gsave
    75 rotate
-   bnc-flap-w 2 div 4.2 mm add neg bnc-protrude 0.5 mm sub fold-mark add rmoveto b-stand b-thick add connector-flap
+   bnc-flap-w 2 div 4.2 mm add neg bnc-protrude 0.5 mm sub fold-mark add rmoveto
+   b-stand b-thick add connector-flap
 grestore
 
 -3 mm -30 mm moveto  % bottom
 gsave
    90 15 add rotate
-   bnc-flap-w 2 div 4.2 mm add    bnc-protrude 0.5 mm sub fold-mark add rmoveto b-stand b-thick add connector-flap
+   bnc-flap-w 2 div 4.2 mm add    bnc-protrude 0.5 mm sub fold-mark add rmoveto
+   b-stand b-thick add connector-flap
 grestore
 
 % center BNC flaps
 -8 mm 0 mm moveto    % top
 gsave
    85 rotate
-   bnc-flap-w 2 div     bnc-protrude fold-mark add rmoveto b-stand b-thick add connector-flap
+   bnc-flap-w 2 div     bnc-protrude fold-mark add rmoveto
+   b-stand b-thick add connector-flap
 grestore
 
 -8 mm 0 mm moveto    % bottom
 gsave
    90 5 add rotate
-   bnc-flap-w 2 div neg   bnc-protrude fold-mark add rmoveto b-stand b-thick add connector-flap
+   bnc-flap-w 2 div neg   bnc-protrude fold-mark add rmoveto
+   b-stand b-thick add connector-flap
 grestore
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -201,9 +203,8 @@ left-heatsink-hole 0 8 mm screw-hole
 
 % BNC flaps.
 
-% The connector centers are t-stand distance from the top
-% minus the board thickness (the connectors are mounted on top of the board),
-% hence all are t-stand b-thick sub offset.
+% The connector centers are t-stand distance from the top, since they
+% are soldered directly on the top-side of the board.
 % Also, these flaps will go on top of the flaps coming from the bottom, so we
 % add bend-r
 
@@ -211,26 +212,31 @@ left-heatsink-hole 0 8 mm screw-hole
 -3 mm 30 mm moveto   % top
 gsave
    75 rotate
-   bnc-flap-w 2 div 4.2 mm add neg bnc-protrude 0.5 mm sub fold-mark add bend-r add rmoveto t-stand b-thick sub connector-flap
+   bnc-flap-w 2 div 4.2 mm add neg bnc-protrude 0.5 mm sub fold-mark add bend-r add rmoveto
+   %t-stand b-thick sub connector-flap
+   t-stand connector-flap
 grestore
 
 -3 mm -30 mm moveto  % bottom
 gsave
    90 15 add rotate
-   bnc-flap-w 2 div 4.2 mm add    bnc-protrude 0.5 mm sub fold-mark add bend-r add rmoveto t-stand b-thick sub connector-flap
+   bnc-flap-w 2 div 4.2 mm add    bnc-protrude 0.5 mm sub fold-mark add bend-r add rmoveto
+   t-stand connector-flap
 grestore
 
 % center BNC flaps
 -8 mm 0 mm moveto    % top
 gsave
    85 rotate
-   bnc-flap-w 2 div     bnc-protrude fold-mark add bend-r add rmoveto t-stand b-thick sub connector-flap
+   bnc-flap-w 2 div     bnc-protrude fold-mark add bend-r add rmoveto
+   t-stand connector-flap
 grestore
 
 -8 mm 0 mm moveto    % bottom
 gsave
    90 5 add rotate
-   bnc-flap-w 2 div neg   bnc-protrude fold-mark add bend-r add rmoveto t-stand b-thick sub connector-flap
+   bnc-flap-w 2 div neg   bnc-protrude fold-mark add bend-r add rmoveto
+   t-stand connector-flap
 grestore
 
 showpage
