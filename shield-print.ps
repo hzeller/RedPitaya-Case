@@ -99,10 +99,29 @@
     grestore
 } def
 
+% Draws horizontal measurement line from current position.
+% <length>
+/measure-line {
+    0 1 mm rlineto
+    0 -2 mm rlineto
+    0 1 mm rmoveto
+    % <length from stack>
+    0 rlineto
+    0 1 mm rlineto
+    0 -2 mm rlineto
+} def
+
 /Helvetica findfont 9 scalefont setfont
 thin-line setlinewidth
 
 20 mm 250 mm moveto (RedPitaya case metal cutouts. Print out, glue on tinned sheet; punch centers + drill; then cut; fold; Nice to have: solder edges.) show
+
+% Scaling test
+0 setlinewidth
+40 mm 242 mm moveto (Make sure your printer prints 1:1 with these reference lines) show
+40 mm 240 mm moveto   100 mm measure-line   5 mm 0 rmoveto (100mm) show
+40 mm 235 mm moveto   101.6 mm measure-line 5 mm 0 rmoveto (4 inches) show
+stroke
 
 % Origin of our print, somewhere in the middle of the page
 50 mm 100 mm translate
