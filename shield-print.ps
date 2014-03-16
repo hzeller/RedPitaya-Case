@@ -3,7 +3,13 @@
 % PostScript: the simplest way to do 2D CAD :)
 %
 % Guidance printout for a RedPitaya http://redpitaya.com/ shield.
-% Print on paper, glue on a thin tin-plate, and cut with scissors.
+% Print on paper, glue on a thin tin-plate, drill, then cut with scissors.
+
+% Zero X is on the left screw pair centers.
+% Zero Y is center of the board.
+% (for instance, the main screws are at (0,27), (0,-27), (84,27), (84,-27) )
+% These values are taken from the mechanical dimensions documentation
+% https://www.dropbox.com/s/ygp3sbjvpihmr03/Red_Pitaya_Dimensions_v1.0.1.pdf
 
 % All our measurements are in mm, so let's have a function that translates
 /mm { 25.4 div 72 mul } def
@@ -85,7 +91,13 @@
     grestore
 } def
 
-
+/mark-origin {
+    gsave
+    1 0 0 setrgbcolor
+    0 setlinewidth
+    0 0 cross
+    grestore
+} def
 
 /Helvetica findfont 9 scalefont setfont
 thin-line setlinewidth
@@ -100,7 +112,9 @@ thin-line setlinewidth
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 10 mm 45 mm moveto ([inside case; all folds inwards]) show
-0 mm 0 mm moveto (GitHub hzeller/RedPitaya-Case | Open Source Hardware) show
+5 mm 0 mm moveto (GitHub hzeller/RedPitaya-Case | Open Source Hardware) show
+
+mark-origin
 
 % Bore holes of RP
  0 mm  27 mm 3 mm screw-hole
@@ -180,19 +194,22 @@ grestore
 0 100 mm translate
 0 0 1 setrgbcolor   % comment out if you'd like the lines black.
 
-20 mm 8 mm moveto ([outside case; BNC flaps fold outwards]) show
+mark-origin
+
+-30 mm -35 mm moveto ([outside case; BNC flaps fold outwards]) show
+30 mm 20 mm moveto (<- Pretty sharp - round over a bit while cutting) show
 
 0 mm  27 mm 3 mm screw-hole
 0 mm -27 mm 3 mm screw-hole
 
 % outline
--7 mm 26.5 mm moveto
--3 mm 30 mm lineto
-2.5 mm 30 mm lineto
-2.5 mm 20.5 mm lineto
-29.5 mm 20.5 mm lineto
+-7 mm 26.5 mm moveto    % start at BNC flap
+-3 mm 30 mm lineto      % around screw hole #1
+2.5 mm 30 mm lineto     % around screw hole #2
+2.5 mm 20.5 mm lineto   % down to corner of 13x2 connector
+29.5 mm 20.5 mm lineto  % very tip at the end of the heatsink
 
-9 mm 0 mm lineto
+9 mm 0 mm lineto        % center of the heatsink; tip
 
 29.5 mm -20.5 mm lineto
 2.5 mm -20.5 mm lineto
