@@ -22,7 +22,7 @@ mechanical parts from the documentation text. Different color ?)
 
 The OpenScad file plastic-case.scad is the source for the 3D objects.
 These are the stand-offs and the actual case.
-(The rpcase.stl file is the binary result included in this distribution for
+(The plastic-case.stl file is the binary result included in this distribution for
 easy use).
 
 (The PostScript file is ready to use, the OpenScad file is still work in
