@@ -79,7 +79,12 @@ module sata() {
     color("DarkSlateGray") cube([35, 6.5, connector_height + 1]);
 }
 module heatsink() {
-    color("DarkSlateGray") rotate([0, 0, 45]) translate([0, 0, 10]) cube([28.5 + 1, 28.5 + 1, 20], center=true);
+    color("DarkSlateGray") rotate([0, 0, -45]) translate([0, 0, 10]) {
+	difference() {
+	    cube([28.5 + 1, 28.5 + 1, 20], center=true);
+	    translate([0, 0, 2]) cube([30, 0.8, 16], center=true);  // Some support
+	}
+    }
     translate([-23.3, 0, 0]) cylinder(r=4, h=9);
     translate([+23.3, 0, 0]) cylinder(r=4, h=9);
 }
@@ -119,7 +124,7 @@ module RedPitaya() {
 	translate([26, 21.5, 0]) color("silver") cylinder(r=8.5/2, h=9.2);
 
 	translate([11, 30 - 5.2, 0]) cube([16, 2.7, 9]);  // JTAG
-	translate([7, 28, 0]) led_window();
+	translate([7.5, 28, 0]) led_window();
 	translate([89, -5.5, 0])  rotate([0, 0, -5]) bnc_cut();
 	translate([89,  5.5, 0])  rotate([0, 0, 5])  bnc_cut();
 	translate([87, -17.5, 0]) rotate([0, 0, -15]) bnc_cut();
@@ -170,8 +175,14 @@ module inner_volume() {
 	translate([80, 5, base_t]) rotate([0, 45, 0]) cube([20, mechanical_support, 20]);
 	translate([80, 15, base_t]) rotate([0, 45, 0]) cube([20, mechanical_support, 20]);
 
+	translate([87 - 42.5, 40, 5]) rotate([45 + 15, 0, 0]) cube([mechanical_support, 20, 20]);
+	translate([87 - 42.5, -40, 5]) rotate([45 - 15, 0, 0]) cube([mechanical_support, 20, 20]);
+
 	// Bar behind ethernet and usb
 	translate([63, 8, base_t - 1.5 + epsilon]) cube([mechanical_support, 30, 3], center=true);
+
+	// Bar accross the heatsink.
+	translate([87 - 55.5, 0, base_t - 2/2]) rotate([0, 0, -45]) cube([32, 0.8, 2], center=true);
 
 	// Shield around LEDs (very close to ethernet - should not interfere with JTag)
 	translate([54, -26, base_t - stand_t/2]) cube([20, mechanical_support, stand_t], center=true);
@@ -225,14 +236,15 @@ module mount() {
     }
 }
 
+module print() {
+    // Final assembly. Rotate so that it is on its back.
+    translate([0, 0, base_t + case_thick]) rotate([180, 0, 0]) mount();
+
+    // Standoffs. Might make sense to print separately to avoid too many
+    // 'spiderwebs' between case and standoffs (depending on your hot-end)
+    translate([31, 0, 0]) rotate([0, 0, -45]) standoffs();
+}
+
 // View RP separately
 //RedPitaya();
-//mount();
-
-// Final assembly
-translate([0, 0, base_t + case_thick]) rotate([180, 0, 0]) mount();
-
-// Standoffs. Might make sense to print separately to avoid too many
-// 'spiderwebs' between case and standoffs (depending on your hot-end)
-translate([31, 0, 0]) rotate([0, 0, 45]) standoffs();
-
+print();
