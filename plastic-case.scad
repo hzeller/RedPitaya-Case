@@ -1,6 +1,7 @@
 // RedPitaya case
 //(cc-BY-SA) h.zeller@acm.org
-
+// Some measurements are a bit manually 'adjusted' - this should be more
+// parametric. Ah, well, first version.
 $fn=48;
 epsilon=0.1;
 
