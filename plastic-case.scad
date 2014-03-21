@@ -33,6 +33,8 @@ drill_hole=3 + 0.25;
 
 connector_height=9.3;
 
+heatsink_extra_space=4;  // Additional space around edges of the heatsink.
+
 // The standoff in the corner of the analog area. With
 // one flat area, so that it is possible to tempoarily fix
 // it to the 13x2 connector while assembling.
@@ -82,8 +84,9 @@ module sata() {
 module heatsink() {
     color("DarkSlateGray") rotate([0, 0, -45]) translate([0, 0, 10]) {
 	difference() {
-	    cube([28.5 + 1, 28.5 + 1, 20], center=true);
-	    translate([0, 0, 2]) cube([30, 0.8, 16], center=true);  // Some support
+	    cube([28.5 + heatsink_extra_space, 28.5 + heatsink_extra_space, 20], center=true);
+            // Some support through the fins
+	    translate([0, 0, 2]) cube([30 + heatsink_extra_space, 0.8, 16], center=true);
 	}
     }
     translate([-23.3, 0, 0]) cylinder(r=4, h=9);
@@ -155,8 +158,10 @@ module cased_volume() {
 }
 
 module heatsink_support() {
-    translate([87 - 55.5, 21.2 - 0.5, base_t - 1 + epsilon]) cube([15, 0.5, 2], center=true);
-    translate([87 - 55.5, -21.2 + 0.5, base_t - 1 + epsilon]) cube([15, 0.5, 2], center=true);
+    assign (extra_len= 1.41 * heatsink_extra_space) {
+       translate([87 - 55.5, 21.2 - 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.5, 2 + case_thick], center=true);
+       translate([87 - 55.5, -21.2 + 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.5, 2 + case_thick], center=true);
+   }
 }
 
 // Negative volume inside the case. Essentially the cased volume, but we
@@ -191,7 +196,7 @@ module inner_volume() {
 	translate([63, 8, base_t - 1.5 + epsilon]) cube([mechanical_support, 30, 3], center=true);
 
 	// Bar accross the heatsink.
-	translate([87 - 55.5, 0, base_t - 2/2]) rotate([0, 0, -45]) cube([32, 0.8, 2], center=true);
+	translate([87 - 55.5, 0, base_t - 2/2]) rotate([0, 0, -45]) cube([34 + heatsink_extra_space, 0.8, 2], center=true);
 
 	// Shield around LEDs (very close to ethernet - should not interfere with JTag)
 	translate([54, -26, base_t - stand_t/2]) cube([20, mechanical_support, stand_t], center=true);
