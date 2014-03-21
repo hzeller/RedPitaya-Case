@@ -4,7 +4,8 @@ A case for the RedPitaya
 A shielded case for the scope/function generator instrument from
 http://redpitaya.com/.
 The bare RedPitaya is just the board and without any shielding or protective
-housing - this project attempts to remedy that.
+housing - this project attempts to remedy that. See a couple of pictures in
+this [G+ Post][g+-post].
 
 The shield-metal-cut.ps PostScript file is the source for the shielding.
 Print this on paper, glue on a thin (best tinned) iron shield metal and cut out.
@@ -25,15 +26,13 @@ mechanical parts from the documentation text. Different color ?)
 The OpenScad file plastic-case.scad is the source for the 3D objects.
 These are the stand-offs and the actual case.
 (The plastic-case.stl file is the binary result included in this distribution for
-easy use).
+easy use). This is the first shot; if you have improvements, just send me a pull-request.
 
 ![3D Print][design]
-
-(The PostScript file is ready to use, the OpenScad file is still work in
-progress, it only creates the stand-offs right now, no case).
 
 ![Assembled unit][assembled]
 
 [metal-case]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/metal-case.png
 [assembled]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/assembled.jpg
 [design]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/red-pitaya-case.png
+[g+-post] https://plus.google.com/u/0/+HennerZeller/posts/JhjRMoBC59u
