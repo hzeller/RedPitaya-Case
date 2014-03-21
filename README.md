@@ -16,6 +16,8 @@ a line of reference length in the printout), you can correct that directly in th
 program, just change the actual length in the /measured-reference-length
 variable. If you need a DXF file, create shield-metal-cut.dxf with the Makefile.
 
+![Metal Case][metal-case]
+
 (If you have a laser cutter or other means to automatically cut the shield,
 please let me know what the best way is to provide a file that separates the
 mechanical parts from the documentation text. Different color ?)
@@ -25,5 +27,13 @@ These are the stand-offs and the actual case.
 (The plastic-case.stl file is the binary result included in this distribution for
 easy use).
 
+![3D Print][design]
+
 (The PostScript file is ready to use, the OpenScad file is still work in
 progress, it only creates the stand-offs right now, no case).
+
+![Assembled unit][assembled]
+
+[metal-case]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/metal-case.png
+[assembled]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/assembled.jpg
+[design]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/red-pitaya-case.png
