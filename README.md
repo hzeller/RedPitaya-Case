@@ -35,4 +35,4 @@ easy use). This is the first shot; if you have improvements, just send me a pull
 [metal-case]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/metal-case.png
 [assembled]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/assembled.jpg
 [design]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/red-pitaya-case.png
-[g+-post] https://plus.google.com/u/0/+HennerZeller/posts/JhjRMoBC59u
+[g+-post]: https://plus.google.com/u/0/+HennerZeller/posts/JhjRMoBC59u
