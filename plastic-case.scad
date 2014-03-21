@@ -99,6 +99,8 @@ module bnc_cut() {
     }
 }
 
+// The rough outline of the RedPitaya, so that we can substract its volume from the
+// case and thus punch the holes for connectors and heatsink.
 module RedPitaya() {
     translate([87, 0, board_thick]) rotate([0, 0, 180]) {
 	// from Red_Pitaya_Dimensions_v1.0.1.pdf. All measuremeents are from the back of the board
@@ -125,7 +127,7 @@ module RedPitaya() {
 	translate([26, 21.5, 0]) color("silver") cylinder(r=8.5/2, h=9.2);
 
 	translate([11, 30 - 5.2, 0]) cube([16, 2.7, 9]);  // JTAG
-	translate([7.5, 28, 0]) led_window();
+	translate([7.5, 28, 0]) led_window();  // we formulate that as block to punch out the top
 	translate([89, -5.5, 0])  rotate([0, 0, -5]) bnc_cut();
 	translate([89,  5.5, 0])  rotate([0, 0, 5])  bnc_cut();
 	translate([87, -17.5, 0]) rotate([0, 0, -15]) bnc_cut();
@@ -152,6 +154,11 @@ module cased_volume() {
     }
 }
 
+module heatsink_support() {
+    translate([87 - 55.5, 21.2 - 0.5, base_t - 1 + epsilon]) cube([15, 0.5, 2], center=true);
+    translate([87 - 55.5, -21.2 + 0.5, base_t - 1 + epsilon]) cube([15, 0.5, 2], center=true);
+}
+
 // Negative volume inside the case. Essentially the cased volume, but we
 // leave a couple of support structures in there.
 module inner_volume() {
@@ -167,15 +174,16 @@ module inner_volume() {
 	translate([84, 27, stand_b + board_thick]) cylinder(r=screw_base_dia/2, h=40);
 	translate([84, -27, stand_b + board_thick]) cylinder(r=screw_base_dia/2, h=40);
 
-	// Some bridges around the connectors and heatsink 'delta' to improve stability.
-	translate([87 - 55.5, 21.2 - 0.5, base_t - 1 + epsilon]) cube([10, mechanical_support, 2], center=true);
-	translate([87 - 55.5, -21.2 + 0.5, base_t - 1 + epsilon]) cube([10, mechanical_support, 2], center=true);
+	// Some bridges around the connectors and heatsink corner to improve stability.
+	// The heatsink cuts away some corner here, so below in mount(), we add that again.
+	heatsink_support();
 
 	// Angled support flaps for the back of the case.
 	// Around the  SD card
 	translate([80, 5, base_t]) rotate([0, 45, 0]) cube([20, mechanical_support, 20]);
 	translate([80, 15, base_t]) rotate([0, 45, 0]) cube([20, mechanical_support, 20]);
 
+	// Angled supports between connectors and SATA/LED-slot
 	translate([87 - 42.5, 40, 5]) rotate([45 + 15, 0, 0]) cube([mechanical_support, 20, 20]);
 	translate([87 - 42.5, -40, 5]) rotate([45 - 15, 0, 0]) cube([mechanical_support, 20, 20]);
 
@@ -235,6 +243,7 @@ module mount() {
 	case();
 	translate([0, 0, stand_b]) RedPitaya();
     }
+    heatsink_support();
 }
 
 module print() {
