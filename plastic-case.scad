@@ -29,7 +29,7 @@ base_t=above_shield + base_headroom;
 base_w=90;
 base_h=65;
 
-drill_hole=3 + 0.25;
+drill_hole=3 + 0.3;
 
 connector_height=9.3;
 
@@ -95,10 +95,10 @@ module heatsink() {
 module led_window() {
     cube([34, 3, 12]);
 }
-module bnc_cut() {
+module bnc_cut(radius=4.2) {
     hull() {
-	rotate([0, 90, 0]) cylinder(r=4, h=15);
-	translate([0, -4, -15]) cube([15, 8, 1]);
+	rotate([0, 90, 0]) cylinder(r=radius, h=15);
+	translate([0, -4, -15]) cube([15, 2 * radius, 1]);
     }
 }
 module arrow() {
