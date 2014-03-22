@@ -30,9 +30,16 @@ easy use). This is the first shot; if you have improvements, just send me a pull
 
 ![3D Print][design]
 
+The top part of the case will just be attached with the
+'melting plastic on hole' technique found in many consumer devices (anyone knows
+how this joining technique is called ?)
+![Attached with melted plastic pillar][melt-attached]
+
+The final case looks like this; the arrows show input/outputs.
 ![Assembled unit][assembled]
 
 [metal-case]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/metal-case.png
+[melt-attached]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/melt-attached.jpg
 [assembled]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/assembled.jpg
 [design]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/red-pitaya-case.png
 [g+-post]: https://plus.google.com/u/0/+HennerZeller/posts/JhjRMoBC59u
