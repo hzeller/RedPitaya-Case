@@ -167,8 +167,8 @@ module cased_volume() {
 
 module heatsink_support() {
     assign (extra_len= 1.41 * heatsink_extra_space) {
-       translate([87 - 55.5, 21.2 - 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.5, 2 + case_thick], center=true);
-       translate([87 - 55.5, -21.2 + 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.5, 2 + case_thick], center=true);
+       translate([87 - 55.5, 21.2 - 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.7, 2 + case_thick], center=true);
+       translate([87 - 55.5, -21.2 + 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.7, 2 + case_thick], center=true);
    }
 }
 
