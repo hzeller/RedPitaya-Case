@@ -57,6 +57,10 @@
     pop pop
 } def
 
+% TODO: make fold lines and cut-lines look different.
+/cut-line { [] 0 setdash } def
+/fold-line { [3 1 3] 0 setdash } def
+
 % Flap around a BNC connector. For convenience of placement, the origin
 % is in the center, at the bottom of the square flap.
 % <y-offset>
@@ -238,13 +242,19 @@ mark-origin
 0 mm  27 mm 3 mm screw-hole
 0 mm -27 mm 3 mm screw-hole
 
+% mounting holes for 'plastic melt joint'
+-5 mm 0 3 mm screw-hole
+10 mm 13 mm 3 mm screw-hole   12 mm 13 mm moveto (<- "plastic melt mount") show
+10 mm -13 mm 3 mm screw-hole
+
 % outline
 -7 mm 26.5 mm moveto    % start at BNC flap
 -3 mm 30 mm lineto      % around screw hole #1
 2.5 mm 30 mm lineto     % around screw hole #2
 2.5 mm 20.5 mm lineto   % down to corner of 13x2 connector
+fold-line
 29.5 mm 20.5 mm lineto  % very tip at the end of the heatsink
-
+cut-line
 9 mm 0 mm lineto        % center of the heatsink; tip
 
 29.5 mm -20.5 mm lineto

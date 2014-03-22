@@ -93,13 +93,16 @@ module heatsink() {
     translate([+23.3, 0, 0]) cylinder(r=4, h=9);
 }
 module led_window() {
-    cube([34, 3, 10]);
+    cube([34, 3, 12]);
 }
 module bnc_cut() {
     hull() {
 	rotate([0, 90, 0]) cylinder(r=4, h=15);
 	translate([0, -4, -15]) cube([15, 8, 1]);
     }
+}
+module arrow() {
+    cylinder(r=2.5, h=30, $fn=3);
 }
 
 // The rough outline of the RedPitaya, so that we can substract its volume from the
@@ -117,6 +120,11 @@ module RedPitaya() {
 	    translate([87, 27, -2 + epsilon])  cylinder(r=3/2, h=2);
 	    translate([87, -27, -2 + epsilon]) cylinder(r=3/2, h=2);
 	}
+
+	// Show direction of input/output
+	translate([92, 12, 0]) rotate([0, 0, 15]) scale([1.6, 1, 1]) arrow();
+	translate([92, -12, 0]) rotate([0, 0, 180-15]) scale([1.6, 1, 1]) arrow();
+
 	translate([43.1 - 0.5, 21.2 - 0.3, 0])    connector13x2();
 	translate([43.1 - 0.5, -30 - 0.3, 0])     connector13x2();
 	translate([6.6, -23.3 - 7, 0])   sata();
@@ -178,6 +186,12 @@ module inner_volume() {
 	translate([0, -27, above_shield]) cylinder(r=screw_base_dia/2, h=40);
 	translate([84, 27, stand_b + board_thick]) cylinder(r=screw_base_dia/2, h=40);
 	translate([84, -27, stand_b + board_thick]) cylinder(r=screw_base_dia/2, h=40);
+
+	// Shielding case plastic melting mounts. These go through holes in the
+	// shield to permanently mount the shield in the case ... with a soldering iron.
+	translate([-5, 0, base_t - 4]) cylinder(r=1.3, h=5);
+	translate([10, 13, base_t - 4]) cylinder(r=1.3, h=5);
+	translate([10, -13, base_t - 4]) cylinder(r=1.3, h=5);
 
 	// Some bridges around the connectors and heatsink corner to improve stability.
 	// The heatsink cuts away some corner here, so below in mount(), we add that again.
