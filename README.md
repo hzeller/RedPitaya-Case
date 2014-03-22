@@ -4,8 +4,7 @@ A case for the RedPitaya
 A shielded case for the scope/function generator instrument from
 http://redpitaya.com/.
 The bare RedPitaya is just the board and without any shielding or protective
-housing - this project attempts to remedy that. See a couple of pictures in
-this [G+ Post][g+-post].
+housing - this project attempts to remedy that. This is on [Thingiverse][thing278113].
 
 The shield-metal-cut.ps PostScript file is the source for the shielding.
 Print this on paper, glue on a thin (best tinned) iron shield metal and cut out.
@@ -42,4 +41,4 @@ The final case looks like this; the arrows show input/outputs.
 [melt-attached]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/melt-attached.jpg
 [assembled]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/assembled.jpg
 [design]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/red-pitaya-case.png
-[g+-post]: https://plus.google.com/u/0/+HennerZeller/posts/JhjRMoBC59u
+[thing278113]: http://www.thingiverse.com/thing:278113
