@@ -4,11 +4,12 @@ A case for the RedPitaya
 A shielded case for the scope/function generator instrument from
 http://redpitaya.com/.
 The bare RedPitaya is just the board and without any shielding or protective
-housing - this project attempts to remedy that. This is on [Thingiverse][thing278113].
+housing - this project attempts to remedy that. This is on [YouMagine][youmagine-design] (also thingiverse 278113).
 
 The shield-metal-cut.ps PostScript file is the source for the shielding.
-Print this on paper, glue on a thin (best tinned) iron shield metal and cut out.
-Make sure that your printer program output is scaled 1:1.
+Print this on paper, glue on a thin (best tinned) iron shield metal (like from an old consumer device or something like a can with flat tinned metal, e.g. an empty paint thinner can) and cut out.
+Make sure that your printer program output is scaled 1:1 (some PDF readers add
+a margin to the page and scale the rest).
 The PostScript program is hand-written, so easy to modify (essentially
 poor-mans parametric 2D CAD :) ).
 If you notice that your printer does not scale the output properly (there is
@@ -29,9 +30,8 @@ easy use). This is the first shot; if you have improvements, just send me a pull
 
 ![3D Print][design]
 
-The top part of the case will just be attached with the
-'melting plastic on hole' technique found in many consumer devices (anyone knows
-how this joining technique is called ?)
+The top part of the case will just be attached with the heat staking technique found in many consumer devices.
+
 ![Attached with melted plastic pillar][melt-attached]
 
 The final case looks like this; the arrows show input/outputs.
@@ -41,4 +41,5 @@ The final case looks like this; the arrows show input/outputs.
 [melt-attached]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/melt-attached.jpg
 [assembled]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/assembled.jpg
 [design]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/red-pitaya-case.png
+[youmagine]: https://www.youmagine.com/designs/shielded-redpitaya-case
 [thing278113]: http://www.thingiverse.com/thing:278113
