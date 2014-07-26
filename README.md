@@ -41,5 +41,5 @@ The final case looks like this; the arrows show input/outputs.
 [melt-attached]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/melt-attached.jpg
 [assembled]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/assembled.jpg
 [design]: https://github.com/hzeller/RedPitaya-Case/raw/master/img/red-pitaya-case.png
-[youmagine]: https://www.youmagine.com/designs/shielded-redpitaya-case
+[youmagine-design]: https://www.youmagine.com/designs/shielded-redpitaya-case
 [thing278113]: http://www.thingiverse.com/thing:278113
