@@ -166,10 +166,9 @@ module cased_volume() {
 }
 
 module heatsink_support() {
-    assign (extra_len= 1.41 * heatsink_extra_space) {
-       translate([87 - 55.5, 21.2 - 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.7, 2 + case_thick], center=true);
-       translate([87 - 55.5, -21.2 + 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.7, 2 + case_thick], center=true);
-   }
+    extra_len = 1.41 * heatsink_extra_space;
+    translate([87 - 55.5, 21.2 - 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.7, 2 + case_thick], center=true);
+    translate([87 - 55.5, -21.2 + 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.7, 2 + case_thick], center=true);
 }
 
 // Negative volume inside the case. Essentially the cased volume, but we
@@ -180,14 +179,14 @@ module inner_volume() {
     // of the inside block, so that they remain after we substract it from the outer block.
     difference() {
 	cased_volume();
-	
+
 	// screw support.
 	translate([0, 27, above_shield]) cylinder(r=screw_base_dia/2, h=40);
 	translate([0, -27, above_shield]) cylinder(r=screw_base_dia/2, h=40);
 	translate([84, 27, stand_b + board_thick]) cylinder(r=screw_base_dia/2, h=40);
 	translate([84, -27, stand_b + board_thick]) cylinder(r=screw_base_dia/2, h=40);
 
-	// Shielding case plastic melting mounts. These go through holes in the
+	// Shielding case heat-stake mounts. These go through holes in the
 	// shield to permanently mount the shield in the case ... with a soldering iron.
 	translate([-5, 0, base_t - 4]) cylinder(r=1.3, h=5);
 	translate([10, 13, base_t - 4]) cylinder(r=1.3, h=5);

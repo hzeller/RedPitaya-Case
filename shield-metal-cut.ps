@@ -124,6 +124,13 @@
     0 -2 mm rlineto
 } def
 
+% Documenting text is written in a different color
+/dshow {
+    gsave
+    0 0 1 setrgbcolor
+    show
+    grestore
+} def
 
 100 mm measured-reference-length div
 100 mm measured-reference-length div
@@ -132,15 +139,15 @@ scale
 /Helvetica findfont 9 scalefont setfont
 thin-line setlinewidth
 
-20 mm 255 mm moveto (RedPitaya case metal cutouts.) show
-20 mm 251 mm moveto (Print out, glue on tinned metal sheet; punch centers + drill; then cut; fold; Nice to have: solder edges.) show
+20 mm 255 mm moveto (RedPitaya case metal cutouts.) dshow
+20 mm 251 mm moveto (Print out, glue on tinned metal sheet; punch centers + drill; then cut; fold; Nice to have: solder edges.) dshow
 
 % Scaling test
 thin-line setlinewidth
-30 mm 243 mm moveto (Make sure your printer scales 1:1 by confirming the length of these reference lines) show
-60 mm 230 mm moveto (If off, change /measured-reference-length variable.) show
-40 mm 240 mm moveto   100 mm measure-line   5 mm 0 rmoveto (100mm) show
-40 mm 235 mm moveto   101.6 mm measure-line 5 mm 0 rmoveto (4 inches) show
+30 mm 243 mm moveto (Make sure your printer scales 1:1 by confirming the length of these reference lines) dshow
+60 mm 230 mm moveto (If off, change /measured-reference-length variable.) dshow
+40 mm 240 mm moveto   100 mm measure-line   5 mm 0 rmoveto (100mm) dshow
+40 mm 235 mm moveto   101.6 mm measure-line 5 mm 0 rmoveto (4 inches) dshow
 stroke
 
 % Origin of our print, somewhere in the middle of the page
@@ -150,9 +157,9 @@ stroke
 %%% Bottom Part. Paper on the 'inside' of the case
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-10 mm 47 mm moveto ([ BOTTOM case; all folds inwards, towards paper ]) show
-5 mm 0 mm moveto (GitHub hzeller/RedPitaya-Case) show
-5 mm -5 mm moveto (Open Source Hardware) show
+10 mm 47 mm moveto ([ BOTTOM case; all folds inwards, towards paper ]) dshow
+5 mm 0 mm moveto (GitHub hzeller/RedPitaya-Case) dshow
+5 mm -5 mm moveto (Open Source Hardware) dshow
 
 mark-origin
 
@@ -232,19 +239,18 @@ grestore
 
 % comment out the following line to see it aligned on top of the bottom part
 0 100 mm translate
-0 0 1 setrgbcolor   % comment out if you'd like the lines black.
 
 mark-origin
 
--30 mm -35 mm moveto ([ TOP case; BNC flaps fold outwards ]) show
-30 mm 20 mm moveto (<- Pretty sharp - round over a bit while cutting) show
+-30 mm -35 mm moveto ([ TOP case; BNC flaps fold outwards ]) dshow
+30 mm 20 mm moveto (<- Pretty sharp - round over a bit while cutting) dshow
 
 0 mm  27 mm 3 mm screw-hole
 0 mm -27 mm 3 mm screw-hole
 
-% mounting holes for 'plastic melt joint'
+% mounting holes for 'heat stake mount'
 -5 mm 0 3 mm screw-hole
-10 mm 13 mm 3 mm screw-hole   12 mm 13 mm moveto (<- "plastic melt mount") show
+10 mm 13 mm 3 mm screw-hole   12 mm 13 mm moveto (<- heat stake mount) dshow
 10 mm -13 mm 3 mm screw-hole
 
 % outline
