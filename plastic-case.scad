@@ -35,6 +35,11 @@ connector_height=9.3;
 
 heatsink_extra_space=4;  // Additional space around edges of the heatsink.
 
+// Lightpipe.
+light_distance=2.6;
+light_diameter=1.85+0.2;
+light_outer=3.5;
+
 // The standoff in the corner of the analog area. With
 // one flat area, so that it is possible to tempoarily fix
 // it to the 13x2 connector while assembling.
@@ -55,6 +60,18 @@ module bottom_standoff() {
 	cylinder(r=stand_t/2, h=stand_b);
 	translate([0,0,-epsilon]) cylinder(r=drill_hole/2, h=stand_t + 2 * epsilon);
     }
+}
+
+module led_pipes(punch=false) {
+     for (i = [0:1:11]) {
+	  translate([i*light_distance, 0, 0]) {
+	       if (punch) {
+		    cylinder(r=light_diameter/2, h=15);
+	       } else {
+		    translate([0, 0, 5]) cylinder(r=light_outer/2, h=10);
+	       }
+	  }
+     }
 }
 
 // Put together the set of standoffs needed.
@@ -92,9 +109,7 @@ module heatsink() {
     translate([-23.3, 0, 0]) cylinder(r=4, h=9);
     translate([+23.3, 0, 0]) cylinder(r=4, h=9);
 }
-module led_window() {
-    cube([34, 3, 12]);
-}
+
 module bnc_cut(radius=4.2) {
     hull() {
 	rotate([0, 90, 0]) cylinder(r=radius, h=15);
@@ -137,8 +152,9 @@ module RedPitaya() {
 	translate([26, 12.5, 0]) color("silver") cylinder(r=8.5/2, h=9.2);
 	translate([26, 21.5, 0]) color("silver") cylinder(r=8.5/2, h=9.2);
 
-	translate([11, 30 - 5.2, 0]) cube([16, 2.7, 9]);  // JTAG
-	translate([7.5, 28, 0]) led_window();  // we formulate that as block to punch out the top
+	translate([8, 30 - 5.6, 0]) cube([17, 3.1, 8.5]);  // JTAG
+	translate([13, 29, 0]) led_pipes(true);
+
 	translate([89, -5.5, 0])  rotate([0, 0, -5]) bnc_cut();
 	translate([89,  5.5, 0])  rotate([0, 0, 5])  bnc_cut();
 	translate([87, -17.5, 0]) rotate([0, 0, -15]) bnc_cut();
@@ -155,7 +171,7 @@ module cased_volume() {
 	// The angled 'blocks' sticking out.
 	// inner.
 	translate([-3, 0, 0]) hull() {
-	    rotate([0, 0, -5]) translate([-10, 0, 0]) cube([10, 13, base_t]);
+	     rotate([0, 0, -5]) translate([-10, 0, 0]) cube([10, 13, base_t]);
 	    rotate([0, 0, 5]) translate([-10, -13, 0]) cube([10, 13, base_t]);
 
 	    // outer
@@ -171,7 +187,7 @@ module heatsink_support() {
     translate([87 - 55.5, -21.2 + 0.5, base_t - 1 + case_thick/2]) cube([15 + extra_len, 0.7, 2 + case_thick], center=true);
 }
 
-// Negative volume inside the case. Essentially the cased volume, but we
+// Negative volume inside the case. Essentially thec ased volume, but we
 // leave a couple of support structures in there.
 module inner_volume() {
     // We want some mechanical construction parts left behind, e.g.
@@ -212,7 +228,10 @@ module inner_volume() {
 	translate([87 - 55.5, 0, base_t - 2/2]) rotate([0, 0, -45]) cube([34 + heatsink_extra_space, 0.8, 2], center=true);
 
 	// Shield around LEDs (very close to ethernet - should not interfere with JTag)
-	translate([54, -26, base_t - stand_t/2]) cube([20, mechanical_support, stand_t], center=true);
+	// Disabled now, the light-pipe shroud should do more of this
+	//translate([54, -26, base_t - stand_t/2]) cube([20, mechanical_support, stand_t], center=true);
+
+	translate([87 - 13 - 11*2.6, -29, 3]) led_pipes(false);
     }
 }
 
@@ -264,13 +283,20 @@ module mount() {
     heatsink_support();
 }
 
-module print() {
-    // Final assembly. Rotate so that it is on its back.
+module print_case() {
+     // Final assembly. Rotate so that it is on its back.
     translate([0, 0, base_t + case_thick]) rotate([180, 0, 0]) mount();
+}
 
-    // Standoffs. Might make sense to print separately to avoid too many
-    // 'spiderwebs' between case and standoffs (depending on your hot-end)
-    translate([31, 0, 0]) rotate([0, 0, -45]) standoffs();
+module print_standoffs() {
+     // Standoffs. Might make sense to print separately to avoid too many
+     // 'spiderwebs' between case and standoffs (depending on your hot-end)
+     translate([31, 0, 0]) rotate([0, 0, -45]) standoffs();
+}
+
+module print() {
+     print_case();
+     print_standoffs();
 }
 
 // View RP separately
