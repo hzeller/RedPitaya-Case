@@ -98,7 +98,7 @@ Place the top of the case on top of the assembly and push 20mm M3 countersunk
 screws through all assembly holes. Fasten them with M3 nuts on the bottom.
 
 
-### Light Pipes
+#### Light Pipes
 
 Once the case is put together, we can install the light pipes. These provide
 a nice crisp view of the LEDs inside the case. They are
